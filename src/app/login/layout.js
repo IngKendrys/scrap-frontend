@@ -2,13 +2,13 @@ import Image from "next/image";
 export default function LoginLayout({ children }) {
   return (
     <div className="flex">
-      <section className="w-3/4 h-screen flex-1 items-center justify-center p-52">
+      <section className="w-3/4 h-screen flex-1 items-center justify-center ">
         <div className="mb-8 flex flex-col items-center">
           <Image
             src="/logo_scrap.png"
             alt="Scrap Software"
-            width={150}
-            height={150}
+            width={200}
+            height={200}
           />
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Bienvenido
