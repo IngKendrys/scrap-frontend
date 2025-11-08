@@ -1,6 +1,8 @@
 import "./globals.css";
 import ReduxProvider from "../redux/provider";
 import { Nunito } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -17,6 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body className={nunito.className}>
         <ReduxProvider>{children}</ReduxProvider>
+        <ToastContainer />
       </body>
     </html>
   );

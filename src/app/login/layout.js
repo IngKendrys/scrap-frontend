@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 export default function LoginLayout({ children }) {
+  
   return (
     <div className="flex">
       <section className="w-3/4 h-screen flex-1 items-center justify-center ">
@@ -59,6 +62,7 @@ export default function LoginLayout({ children }) {
           <p className="text-lg opacity-90 text-pretty">
             Scrap Software te ayuda a optimizar tu flujo de trabajo.
           </p>
+          <h6>© 2025 Scrap Software - Ing. Kendrys Diaz</h6>
         </div>
       </section>
     </div>

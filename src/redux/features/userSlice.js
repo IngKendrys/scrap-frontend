@@ -11,11 +11,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-        console.log("Setting user with payload:", action.payload);
       const { token, user } = action.payload;
       state.token = token;
       state.user = user;
-      Cookies.set("token", token, { expires: 7 }); // dura 7 días
+      Cookies.set("token", token, { expires: 7 }); 
       Cookies.set("user", JSON.stringify(user), { expires: 7 });
     },
     logout: (state) => {
