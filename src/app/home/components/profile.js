@@ -30,7 +30,7 @@ export default function Profile() {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <button className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="text-right hidden sm:block">
+              <div className="text-right">
                 <p className="text-sm font-medium text-foreground">{user?.nombre_negocio}</p>
                 <p className="text-xs text-muted-foreground">{user?.is_superuser ? "Administrador" : "Negocio"}</p>
               </div>

@@ -33,6 +33,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
   ];
 
   const [formData, setFormData] = useState({
+    id_producto: "",
     nombre: "",
     descripcion: "",
     precio: "",
@@ -43,8 +44,8 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
     vendido: false
   })
 
-  const [previewImages, setPreviewImages] = useState([]) 
-  const [newImages, setNewImages] = useState([]) 
+  const [previewImages, setPreviewImages] = useState([])
+  const [newImages, setNewImages] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const notifyError = (message) => toast.error(message)
   const notifySuccess = (message) => toast.success(message)
@@ -52,6 +53,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
   useEffect(() => {
     if (mode === "edit" && product) {
       setFormData({
+        id_producto: product.id_producto,
         nombre: product.nombre,
         descripcion: product.descripcion,
         precio: product.precio,
@@ -79,7 +81,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    
+
     setNewImages((prev) => [
       ...prev,
       ...files.filter(
@@ -112,11 +114,13 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
         id_categoria: categoriaSeleccionada.id,
         cantidad: Number.parseInt(formData.cantidad),
         vendido: formData.vendido,
-      }, {headers: {
+      }, {
+        headers: {
           Authorization: `Token ${token}`
-        }});
+        }
+      });
 
-      if (newImages.length > 0) {
+      if (newImages.length > 0 && mode === "create") {
         await Promise.all(
           newImages.map(async (file) => {
             const formDataImg = new FormData();
@@ -136,7 +140,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
       notifySuccess("Producto guardado correctamente.");
       onSuccess();
       onOpenChange(false);
-      
+
     } catch (error) {
       console.error("Error:", error);
       const msg =
@@ -149,10 +153,16 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
     }
   };
 
-    const categoriaSeleccionada = categorias.find(
-      (c) => c.id === formData.id_categoria || c.nombre === formData.id_categoria
-    );
-    console.log(previewImages)
+  const removeImage = (index) => {
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
+    setNewImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+
+  const categoriaSeleccionada = categorias.find(
+    (c) => c.id === formData.id_categoria || c.nombre === formData.id_categoria
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
@@ -217,16 +227,17 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="category">Categoría</Label>
                 <Select
+                  className="w-xs"
                   value={String(categoriaSeleccionada?.id || "")}
                   onValueChange={(value) => {
                     const categoria = categorias.find((c) => c.id === Number(value));
                     setFormData({
                       ...formData,
-                      id_categoria: categoria?.id || "", 
+                      id_categoria: categoria?.id || "",
                     });
                   }}
                 >
@@ -259,6 +270,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
                 </Select>
               </div>
             </div>
+
             {mode === "edit" && (
               <div className="flex items-center justify-between border rounded-lg p-3">
                 <Label htmlFor="vendido" className="text-sm">¿Producto vendido?</Label>
@@ -283,8 +295,14 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
                 <div className="flex gap-2 mt-2 overflow-x-auto">
                   {previewImages.map((src, idx) => (
                     <div key={idx} className="relative w-20 h-20 rounded-md overflow-hidden border">
+                      <button
+                        onClick={() => removeImage(idx)}
+                        className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-black transition z-10"
+                      >
+                        ✕
+                      </button>
                       <Image
-                        src={src.imagen_url || src }
+                        src={src.imagen_url || src}
                         alt={`preview-${idx}`}
                         unoptimized
                         fill

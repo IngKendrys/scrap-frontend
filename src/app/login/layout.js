@@ -5,7 +5,7 @@ export default function LoginLayout({ children }) {
   
   return (
     <div className="flex">
-      <section className="w-3/4 h-screen flex-1 items-center justify-center ">
+      <section className="w-3/4 h-screen flex-1 items-center justify-center p-10">
         <div className="mb-8 flex flex-col items-center">
           <Image
             src="/logo_scrap.png"
@@ -55,7 +55,7 @@ export default function LoginLayout({ children }) {
             </svg>
           </div>
         </div>
-        <div className="absolute bottom-10  text-white">
+        <div className="absolute bottom-10  text-white hidden md:block text-center px-4">
           <h2 className="text-xl font-bold text-balance">
             Gestiona tu chatarreria con eficiencia
           </h2>

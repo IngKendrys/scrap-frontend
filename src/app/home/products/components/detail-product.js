@@ -19,8 +19,7 @@ export function DetailProduct({ open, onOpenChange, product, onEdit, onDelete })
         return "bg-orange-500/10 text-orange-500 border-orange-500/20"
     }
   }
-
-  console.log(product)
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">

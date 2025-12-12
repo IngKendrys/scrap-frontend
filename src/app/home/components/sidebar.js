@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { User, ShoppingBag } from "@deemlol/next-icons";
 import { useSelector} from "react-redux";
 import { useRouter } from "next/navigation";
