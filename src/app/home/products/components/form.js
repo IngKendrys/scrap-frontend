@@ -127,7 +127,7 @@ export function FormProduct({ open, onOpenChange, mode, product, onSuccess }) {
             formDataImg.append("imagen_url", file);
             formDataImg.append("id_producto", Number(response.data.id_producto));
 
-            await axios.post("http://127.0.0.1:8000/api/productos/imagenes/crear/", formDataImg, {
+            await axios.post("https://scrap-backend-px9j.onrender.com/api/productos/imagenes/crear/", formDataImg, {
               headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Token ${token}`,
